@@ -44,12 +44,7 @@ export default function App() {
 
         <Lists todoData={todoData} setTodoData={setTodoData} />
         <Form value={value} setValue={setValue} handleSubmit={handleSubmit} />
-
         
-
-
-        
-
       </div>
     </div>
   );
