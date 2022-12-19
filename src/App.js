@@ -6,6 +6,8 @@ import Form from './component/Form';
 
 export default function App() {
 
+  console.log('App is rendering')
+
   const [todoData, setTodoData] = useState([
     {
       id: 1,
@@ -35,6 +37,10 @@ export default function App() {
     )
   }
 
+  const handleRemoveClick = () => {
+    setTodoData([])
+  }
+
   return (
     <div className="flex items-center justify-center w-screen h-screen bg-blue-100">
       <div className='w-full p-6 m-4 bg-white rounded shadow md:max-w-lg md:w-3/4 lg:w-3/4 lg:max-w-lg'>
@@ -42,6 +48,7 @@ export default function App() {
           <h1>
             할 일 목록
           </h1>
+          <button onClick={handleRemoveClick}>Delete all</button>
         </div>
 
         <Form value={value} setValue={setValue} handleSubmit={handleSubmit} />
