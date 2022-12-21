@@ -1,26 +1,14 @@
 import './App.css';
 import { useState } from 'react'
-import React from 'react';
 import Lists from './component/Lists';
 import Form from './component/Form';
 
+const initialTodoData = localStorage.getItem('todoData') 
+  ? JSON.parse(localStorage.getItem('todoData')) 
+  : [];
+
 export default function App() {
-
-  console.log('App is rendering')
-
-  const [todoData, setTodoData] = useState([
-    {
-      id: 1,
-      title: '공부하기',
-      completed: false,
-    },
-    {
-      id: 2,
-      title: '청소하기',
-      completed: false,
-    }
-  ])
-
+  const [todoData, setTodoData] = useState(initialTodoData)
   const [value, setValue] = useState("")
 
   const handleSubmit = (e) => {
@@ -32,13 +20,15 @@ export default function App() {
       completed: false,
     }
 
-    setTodoData(prev => 
-      [...prev, newTodo]
-    )
+    setTodoData(prev => [...prev, newTodo])
+    localStorage.setItem('todoData', JSON.stringify([...todoData, newTodo]))
+
+    setValue('')
   }
 
   const handleRemoveClick = () => {
     setTodoData([])
+    localStorage.setItem('todoData', JSON.stringify([]))
   }
 
   return (
