@@ -12,15 +12,20 @@ const List = React.memo(({ id, title, completed, todoData, setTodoData, provided
 
 
   const handleCompleteChange = (id) => {
-    const newTodoData = todoData.map((data) => {
+    let newTodoData = todoData.map((data) => {
       if (data.id === id) {
         data.completed = !data.completed
       }
       return data;
     })
     setTodoData(newTodoData)
+    localStorage.setItem('todoData', JSON.stringify(newTodoData))
   }
   
+  const handleEditChange = (e) => {
+    setEditedTitle(e.target.value)
+  }
+
   const handleSubmit = () => {
     let newTodoData = todoData.map((data) => {
       if(data.id === id) {
@@ -30,13 +35,10 @@ const List = React.memo(({ id, title, completed, todoData, setTodoData, provided
     })
     
     setTodoData(newTodoData)
+    localStorage.setItem('todoData', JSON.stringify(newTodoData))
     setIsEditing(false)
   }
   
-  const handleEditChange = (e) => {
-    setEditedTitle(e.target.value)
-  }
-
   if(isEditing) {
     return (
       <div className='bg-gray-100 items-center w-full px-4 py-1 my-2 text-gray-600  border rounded'>
@@ -49,7 +51,7 @@ const List = React.memo(({ id, title, completed, todoData, setTodoData, provided
           />
           <div className='items-center flex'>
             <button 
-              onSubmit={handleSubmit}
+              onClick={handleSubmit}
               className='float-right px-4 py-2'
               type='submit'>save</button>
             <button 
@@ -73,7 +75,7 @@ const List = React.memo(({ id, title, completed, todoData, setTodoData, provided
           <input type="checkbox" defaultChecked={completed}
             onChange={() => handleCompleteChange(id)}
           />{" "}
-          <span className={completed ? "line-through" : ""}>
+          <span className={completed ? "line-through" : undefined}>
             {title}
           </span>
         </div>

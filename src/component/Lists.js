@@ -3,14 +3,12 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import List from './List';
 
 const Lists = React.memo(({ todoData, setTodoData }) => {
-  console.log('Lists is rendering')
-
   const handleEnd = (result) => {
     console.log(result);
 
     if(!result.destination) return;
 
-    const newTodoData = [...todoData];
+    const newTodoData = todoData;
 
     // 1. 변경시키는 아이템을 배열에서 지워줍니다. 
     // 2. return 값으로 지워진 아이템을 잡아줍니다.
@@ -19,6 +17,7 @@ const Lists = React.memo(({ todoData, setTodoData }) => {
     // 원하는 자리에 reorderedItem을 insert 해줍니다.
     newTodoData.splice(result.destination.index, 0, reorderedItem);
     setTodoData(newTodoData);
+    localStorage.setItem('todoData', JSON.stringify(newTodoData));
   }
 
   return (
@@ -36,7 +35,7 @@ const Lists = React.memo(({ todoData, setTodoData }) => {
                   >
                     {(provided, snapshot) => (
                       <List 
-                        key={data.id}
+                        // key={data.id}
                         id={data.id}
                         title={data.title}
                         completed={data.completed}
